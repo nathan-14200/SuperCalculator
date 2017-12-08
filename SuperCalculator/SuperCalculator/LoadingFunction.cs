@@ -19,6 +19,7 @@ namespace SuperCalculator
                 Assembly dll = Assembly.LoadFile(path + @"\FunctionLibrary.dll");
                 Type[] types = dll.GetExportedTypes();
                 Console.WriteLine("length of type : " + types.Length);
+
                 foreach(Type type in types)
                 {
                     Console.WriteLine(type.Name);
