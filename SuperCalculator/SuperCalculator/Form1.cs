@@ -53,9 +53,28 @@ namespace SuperCalculator
             {
                 e.Handled = true;
             }
-            
-            //historic.Add(c.ToString());
-            //historic_TextChanged(historic, e);
+            else if(!Char.IsControl(e.KeyChar) && !InputLineCheck(sender, e))
+            {
+                e.Handled = true;
+            }
+        }
+
+
+        private bool InputLineCheck(object sender, KeyPressEventArgs e)
+        {
+            int InputSize = Input.Text.Length;
+            //input can't start with an operator
+            if(InputSize < 1 && !Char.IsDigit(e.KeyChar))
+            {
+                 return false;
+            }
+            //2 operators can't be next to each other
+            else if(InputSize > 1 && !Char.IsDigit(e.KeyChar) &&!Char.IsDigit(Input.Text[InputSize-1]))
+                {
+                    return false;
+                }
+
+            return true;
         }
 
 
