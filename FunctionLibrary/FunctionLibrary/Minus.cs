@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FunctionLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,42 +7,41 @@ using System.Threading.Tasks;
 
 namespace FunctionLibrary
 {
-    public class Add : Function<string>
+    public class Minus : Function<string>
     {
-
-        string Function<string>.Symbol
+        public string HelpMessage
         {
             get
             {
-                return "+";
+                return "does the difference between two numbers";
             }
         }
 
-        string Function<string>.Name
+        public string Name
         {
             get
             {
-                return "Add";
+                return "Minus";
             }
         }
 
-        string Function<string>.HelpMessage
-        {
-            get
-            {
-                return "Does the sum of 2 numbers";
-            }
-        }
-
-        string[] Function<string>.ParametersName
+        public string[] ParametersName
         {
             get
             {
                 string[] param = new string[2];
-                param.SetValue("float a", 0);
-                param.SetValue("float b", 1);
+                param.SetValue("double a", 0);
+                param.SetValue("double b", 1);
 
                 return param;
+            }
+        }
+
+        public string Symbol
+        {
+            get
+            {
+                return "-";
             }
         }
 
@@ -52,12 +52,12 @@ namespace FunctionLibrary
                 double a = double.Parse(args[0]);
                 double b = double.Parse(args[1]);
 
-                string result = (a + b).ToString();
-                return result;
+                double result = a - b;
+                return result.ToString();
             }
             catch
             {
-                return "Could not compute Add function";
+                return "Could not compute Minus function ";
             }
         }
     }

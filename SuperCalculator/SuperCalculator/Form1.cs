@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace SuperCalculator
 {
@@ -22,10 +23,15 @@ namespace SuperCalculator
         {
             //Allow on pressed key events
             this.KeyPreview = true;
+            AllocConsole();
+            LoadingFunction.Operate();
             InitializeComponent();
             Input.KeyPress += new KeyPressEventHandler(KeypressCheck);
+ 
         }
-
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool AllocConsole();
 
         private void Calculator_Load(object sender, EventArgs e)
         {
