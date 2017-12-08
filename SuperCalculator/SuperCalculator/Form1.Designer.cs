@@ -35,6 +35,7 @@
             // 
             // Result
             // 
+            this.Result.BackColor = System.Drawing.SystemColors.ControlLight;
             this.Result.Location = new System.Drawing.Point(12, 12);
             this.Result.Multiline = true;
             this.Result.Name = "Result";
