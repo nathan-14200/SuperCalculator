@@ -8,6 +8,7 @@ namespace FunctionLibrary
 {
     public interface Function<T>
     {
+        string Symbol { get; }
 
         string Name { get; }
         //Get the name of the function

@@ -8,6 +8,15 @@ namespace FunctionLibrary
 {
     class Add : Function<string>
     {
+
+        string Function<string>.Symbol
+        {
+            get
+            {
+                return "+";
+            }
+        }
+
         string Function<string>.Name
         {
             get
