@@ -1,6 +1,6 @@
 ﻿namespace SuperCalculator
 {
-    partial class Form1
+    partial class Calculator
     {
         /// <summary>
         /// Variable nécessaire au concepteur.
@@ -28,12 +28,60 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.Result = new System.Windows.Forms.TextBox();
+            this.Input = new System.Windows.Forms.TextBox();
+            this.Compute = new System.Windows.Forms.Button();
+            this.SuspendLayout();
+            // 
+            // Result
+            // 
+            this.Result.Location = new System.Drawing.Point(12, 12);
+            this.Result.Multiline = true;
+            this.Result.Name = "Result";
+            this.Result.ReadOnly = true;
+            this.Result.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.Result.Size = new System.Drawing.Size(425, 384);
+            this.Result.TabIndex = 0;
+            this.Result.TextChanged += new System.EventHandler(this.historic_TextChanged);
+            // 
+            // Input
+            // 
+            this.Input.Location = new System.Drawing.Point(13, 423);
+            this.Input.Name = "Input";
+            this.Input.Size = new System.Drawing.Size(424, 26);
+            this.Input.TabIndex = 1;
+            // 
+            // Compute
+            // 
+            this.Compute.Location = new System.Drawing.Point(443, 419);
+            this.Compute.Name = "Compute";
+            this.Compute.Size = new System.Drawing.Size(92, 35);
+            this.Compute.TabIndex = 2;
+            this.Compute.Text = "Compute";
+            this.Compute.UseVisualStyleBackColor = true;
+            this.Compute.Click += new System.EventHandler(this.Compute_Click);
+            // 
+            // Calculator
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Text = "Form1";
+            this.ClientSize = new System.Drawing.Size(547, 472);
+            this.Controls.Add(this.Compute);
+            this.Controls.Add(this.Input);
+            this.Controls.Add(this.Result);
+            this.Name = "Calculator";
+            this.Text = "Calculator";
+            this.Load += new System.EventHandler(this.Calculator_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        private System.Windows.Forms.TextBox Result;
+        private System.Windows.Forms.TextBox Input;
+        private System.Windows.Forms.Button Compute;
     }
 }
 
