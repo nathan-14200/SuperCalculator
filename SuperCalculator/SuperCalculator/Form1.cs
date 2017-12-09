@@ -12,7 +12,6 @@ namespace SuperCalculator
 {
     public partial class Calculator : Form
     {
-
         private static List<string> historic = new List<string>();
         //stock the special char used for computing (/,%,+,...)
         private static List<char> acceptedKey = new List<char> { '1', '2', '3', '4', '5',
@@ -85,6 +84,5 @@ namespace SuperCalculator
             historic_TextChanged(historic, e);
             Input.Text = "";
         }
-
     }
 }
