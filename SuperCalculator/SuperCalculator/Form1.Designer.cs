@@ -36,6 +36,7 @@
             // Result
             // 
             this.Result.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.Result.Enabled = false;
             this.Result.Location = new System.Drawing.Point(12, 12);
             this.Result.Multiline = true;
             this.Result.Name = "Result";
@@ -66,6 +67,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(547, 472);
             this.Controls.Add(this.Compute);
             this.Controls.Add(this.Input);

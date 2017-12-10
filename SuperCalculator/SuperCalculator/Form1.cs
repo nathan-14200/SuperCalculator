@@ -29,6 +29,8 @@ namespace SuperCalculator
             function = LoadingFunction.Operate().Item1;
             acceptedKey = LoadingFunction.Operate().Item2;
 
+
+            InitButtons(acceptedKey);
             InitializeComponent();
             Input.KeyPress += new KeyPressEventHandler(KeypressCheck);
  
@@ -104,6 +106,7 @@ namespace SuperCalculator
             else
             {
                 MessageBox.Show("Only one operator per compute");
+                Input.Text = "";
             }
             
         }
@@ -123,6 +126,55 @@ namespace SuperCalculator
             {
                 return test;
             }
+        }
+
+        
+        private void InitButtons(List<char> symbol)
+        {
+            int x = 450;
+            int size = 0;
+            int i = 0;
+            Console.WriteLine("size = " + symbol.Count());
+
+            while (size < symbol.Count())
+            {
+                if (i < 10)
+                {
+                    Button button = new Button();
+                    button.Name = symbol[size].ToString();
+                    button.Text = symbol[size].ToString();
+                    button.Location = new Point(x, 40 * i + 10);
+                    button.Click += new EventHandler(ButtonClick);
+                    button.AutoSize = true;
+                    this.Controls.Add(button);
+                    i++;
+                    size++;
+                    
+                }
+                else
+                {
+                    i = 0;
+                    x += 100;
+                }
+                
+            }
+            
+        }
+
+        private void ButtonClick(object sender, EventArgs e)
+        {
+            Button button = (Button) sender;
+            //Button pressed must respect InputLineCheck
+            KeyPressEventArgs key = new KeyPressEventArgs(Char.Parse(button.Text));
+            if (InputLineCheck(sender, key))
+            {
+                Input.AppendText(button.Text);
+            }
+           
+
+
+
+
         }
 
     }
