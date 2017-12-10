@@ -24,7 +24,7 @@ namespace SuperCalculator
             //Allow on pressed key events
             this.KeyPreview = true;
             AllocConsole();
-            LoadingFunction.Operate();
+            List<string> function = LoadingFunction.Operate();
             InitializeComponent();
             Input.KeyPress += new KeyPressEventHandler(KeypressCheck);
  

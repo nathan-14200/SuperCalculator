@@ -10,9 +10,10 @@ namespace SuperCalculator
 {
     class LoadingFunction
     {
-        public static void Operate()
+        public static List<string> Operate()
             //Get all function and create a button for each with their symbol
         {
+            List<string> operation = new List<string>();
             try
             {
                 string path = Directory.GetCurrentDirectory();
@@ -23,12 +24,16 @@ namespace SuperCalculator
                 foreach(Type type in types)
                 {
                     Console.WriteLine(type.Name);
+                    operation.Add(type.Name);
                 }
+
+                return operation;
             }
             catch
             {
                 Console.WriteLine("Could not get the dll file");
                 Console.ReadKey();
+                return operation;
             }
         }
 
