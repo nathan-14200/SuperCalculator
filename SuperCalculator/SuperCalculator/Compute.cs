@@ -22,14 +22,17 @@ namespace SuperCalculator
             char op = ' ';
             //Get the symbol in the input
             string ope = Regex.Replace(input, @"[\d]", string.Empty);
+
             Console.WriteLine(ope);
-            if(ope.Length == 1)
+
+            //if no operator in input return input
+            if(ope.Length == 0)
             {
-                op = Char.Parse(ope);
+                return input;
             }
             else
             {
-                return "Error length ope";
+                op = Char.Parse(ope);
             }
 
 
@@ -39,38 +42,27 @@ namespace SuperCalculator
                 Assembly dll = Assembly.LoadFile(path + @"\FunctionLibrary.dll");
                 Type[] types = dll.GetExportedTypes();
                 Console.WriteLine("length of type : " + types.Length);
-
-                //Check if our list contain an operator
-                if (symbol.Contains(op))
+               
+                //Check all classes
+                foreach(Type type in types)
                 {
-                    //Check all classes
-                    foreach(Type type in types)
+                    //Check if accepted class (has get_Symbol and not generic)
+                    if (function.Contains(type.Name))
                     {
-                        //Check if accepted class (has get_Symbol and not generic)
-                        if (function.Contains(type.Name))
+                        object temp = Activator.CreateInstance(type);
+                        //Get the symbol of the class
+                        string sym = (string)type.InvokeMember("get_Symbol", BindingFlags.InvokeMethod, null, temp, null);
+                        if (op == Char.Parse(sym))
                         {
-                            object temp = Activator.CreateInstance(type);
-                            //Get the symbol of the class
-                            string sym = (string)type.InvokeMember("get_Symbol", BindingFlags.InvokeMethod, null, temp, null);
-                            if (op == Char.Parse(sym))
-                            {
-
-                                string[] var = input.Split(op).ToArray();
-                                //Compute with Evaluate
-                                result = (string)type.InvokeMember("Evaluate", BindingFlags.InvokeMethod, null, temp, new object[] {var});
-
-                                //Check in Console
-                                Console.WriteLine("result =" + result);
-                                return result;
-                            }
+                            string[] var = input.Split(op).ToArray();
+                            //Compute with Evaluate
+                            result = (string)type.InvokeMember("Evaluate", BindingFlags.InvokeMethod, null, temp, new object[] {var});
+                     
+                            //Check in Console
+                            Console.WriteLine("result =" + result);
+                            return result;
                         }
-                        
-                    }
-                }
-                else
-                {
-                    //return input if no operator found (1 = 1)
-                    return input;
+                    }                  
                 }
             }
             catch (Exception e)

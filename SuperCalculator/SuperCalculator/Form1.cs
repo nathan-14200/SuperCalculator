@@ -42,10 +42,13 @@ namespace SuperCalculator
 
         private void Calculator_Load(object sender, EventArgs e)
         {
+            this.SetStyle(ControlStyles.Selectable, false);
             this.AcceptButton = Compute;
         }
 
         private void historic_TextChanged(object sender, EventArgs e)
+            //Useless for now
+            //Maybe for load data?
         {
             string text = "";
 
@@ -54,7 +57,7 @@ namespace SuperCalculator
                 text += line + "\r\n";
             }
 
-            Result.Text = text;
+            //Result.Text = text;
         }
 
         private void KeypressCheck(object sender, KeyPressEventArgs e)
@@ -98,9 +101,15 @@ namespace SuperCalculator
             if(CheckMultipleOperator(line))
             {
                 string result = Computer.Computing(line, function, acceptedKey);
+
+                //Add to historic to save later in text file
                 historic.Add(line);
                 historic.Add("=" + result);
-                historic_TextChanged(historic, e);
+
+                //Using AppendText makes the scrollbar to follow new line
+                Result.AppendText(line + "\r\n");
+                Result.AppendText("=" + result + "\r\n");
+                //#Obsolete historic_TextChanged(historic, e);
                 Input.Text = "";
             }
             else
@@ -170,9 +179,6 @@ namespace SuperCalculator
             {
                 Input.AppendText(button.Text);
             }
-           
-
-
 
 
         }

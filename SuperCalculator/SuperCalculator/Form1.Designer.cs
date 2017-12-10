@@ -36,7 +36,6 @@
             // Result
             // 
             this.Result.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.Result.Enabled = false;
             this.Result.Location = new System.Drawing.Point(12, 12);
             this.Result.Multiline = true;
             this.Result.Name = "Result";
@@ -72,6 +71,7 @@
             this.Controls.Add(this.Compute);
             this.Controls.Add(this.Input);
             this.Controls.Add(this.Result);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Calculator";
             this.Text = "Calculator";
             this.Load += new System.EventHandler(this.Calculator_Load);
