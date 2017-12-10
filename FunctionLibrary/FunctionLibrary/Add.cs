@@ -9,7 +9,7 @@ namespace FunctionLibrary
     public class Add : Function<string>
     {
 
-        string Function<string>.Symbol
+        public string Symbol
         {
             get
             {
@@ -17,7 +17,7 @@ namespace FunctionLibrary
             }
         }
 
-        string Function<string>.Name
+        public string Name
         {
             get
             {
@@ -25,7 +25,7 @@ namespace FunctionLibrary
             }
         }
 
-        string Function<string>.HelpMessage
+        public string HelpMessage
         {
             get
             {
@@ -33,7 +33,7 @@ namespace FunctionLibrary
             }
         }
 
-        string[] Function<string>.ParametersName
+        public string[] ParametersName
         {
             get
             {
