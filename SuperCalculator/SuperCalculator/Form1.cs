@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace SuperCalculator
 {
@@ -32,6 +33,7 @@ namespace SuperCalculator
             Input.KeyPress += new KeyPressEventHandler(KeypressCheck);
  
         }
+        //Allow to get Console while in Window mode
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool AllocConsole();
@@ -90,9 +92,37 @@ namespace SuperCalculator
         private void Compute_Click(object sender, EventArgs e)
         {
             string line = Input.Text;
-            historic.Add(line);
-            historic_TextChanged(historic, e);
-            Input.Text = "";
+
+            if(CheckMultipleOperator(line))
+            {
+                string result = Computer.Computing(line, function, acceptedKey);
+                historic.Add(line);
+                historic.Add(">>" + result);
+                historic_TextChanged(historic, e);
+                Input.Text = "";
+            }
+            else
+            {
+                MessageBox.Show("Only one operator per compute");
+            }
+            
+        }
+
+        private bool CheckMultipleOperator(string input)
+        {
+            bool test = true;
+            //Delete all numbers from input text
+            string op = Regex.Replace(input, @"[\d]", string.Empty);
+
+            if(op.Length > 1)
+            {
+                test = false;
+                return test;
+            }
+            else
+            {
+                return test;
+            }
         }
 
     }

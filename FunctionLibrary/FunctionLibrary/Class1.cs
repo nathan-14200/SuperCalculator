@@ -19,7 +19,7 @@ namespace FunctionLibrary
         string[] ParametersName { get; }
         //Get the list of param
 
-        T Evaluate(string[] args);
+        T Evaluate(params string[] args);
         //Evaluate function with given param or throw exception
     }
 

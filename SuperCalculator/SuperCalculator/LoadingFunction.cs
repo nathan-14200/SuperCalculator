@@ -36,12 +36,15 @@ namespace SuperCalculator
                 {
                     MemberInfo[] members = type.GetMembers(BindingFlags.Public |
                             BindingFlags.Instance | BindingFlags.InvokeMethod);
-
+                    Console.WriteLine("\n" + type.Name + "\n");
                     foreach (MemberInfo member in members)
                     {
+
+                        Console.WriteLine(member.Name);
                         //Only take classes that have function get_Symbol
-                        if(!type.ContainsGenericParameters && member.Name == "get_Symbol")
+                        if (!type.ContainsGenericParameters && member.Name == "get_Symbol")
                         {
+                            
                             operation.Add(type.Name);
 
                             object temp = Activator.CreateInstance(type);

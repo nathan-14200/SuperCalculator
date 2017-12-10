@@ -45,7 +45,7 @@ namespace FunctionLibrary
             }
         }
 
-        public string Evaluate(string[] args)
+        public string Evaluate(params string[] args)
         {
             try
             {
