@@ -97,7 +97,7 @@ namespace SuperCalculator
             {
                 string result = Computer.Computing(line, function, acceptedKey);
                 historic.Add(line);
-                historic.Add(">>" + result);
+                historic.Add("=" + result);
                 historic_TextChanged(historic, e);
                 Input.Text = "";
             }
