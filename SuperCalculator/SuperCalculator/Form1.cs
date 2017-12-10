@@ -16,15 +16,18 @@ namespace SuperCalculator
 
         private static List<string> historic = new List<string>();
         //stock the special char used for computing (/,%,+,...)
-        private static List<char> acceptedKey = new List<char> { '1', '2', '3', '4', '5',
-        '6', '7', '8', '9', '0', '+', '*', '-', '/'};
+        private static List<char> acceptedKey = new List<char>();
+        private static List<string> function = new List<string>();
 
         public Calculator()
         {
             //Allow on pressed key events
             this.KeyPreview = true;
             AllocConsole();
-            List<string> function = LoadingFunction.Operate();
+            //Initialize available function
+            function = LoadingFunction.Operate().Item1;
+            acceptedKey = LoadingFunction.Operate().Item2;
+
             InitializeComponent();
             Input.KeyPress += new KeyPressEventHandler(KeypressCheck);
  
