@@ -32,6 +32,7 @@
             this.Input = new System.Windows.Forms.TextBox();
             this.Compute = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
+            this.ChargeButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Result
@@ -73,12 +74,23 @@
             this.SaveButton.UseVisualStyleBackColor = true;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
+            // ChargeButton
+            // 
+            this.ChargeButton.Location = new System.Drawing.Point(13, 461);
+            this.ChargeButton.Name = "ChargeButton";
+            this.ChargeButton.Size = new System.Drawing.Size(145, 36);
+            this.ChargeButton.TabIndex = 4;
+            this.ChargeButton.Text = "Charge a DLL";
+            this.ChargeButton.UseVisualStyleBackColor = true;
+            this.ChargeButton.Click += new System.EventHandler(this.ChargeButton_Click);
+            // 
             // Calculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(686, 509);
+            this.ClientSize = new System.Drawing.Size(668, 509);
+            this.Controls.Add(this.ChargeButton);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.Compute);
             this.Controls.Add(this.Input);
@@ -98,6 +110,7 @@
         private System.Windows.Forms.TextBox Input;
         private System.Windows.Forms.Button Compute;
         private System.Windows.Forms.Button SaveButton;
+        private System.Windows.Forms.Button ChargeButton;
     }
 }
 

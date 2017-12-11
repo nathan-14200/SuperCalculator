@@ -12,7 +12,7 @@ namespace SuperCalculator
     {
 
 
-        public static Tuple<List<string>, List<char>> Operate()
+        public static Tuple<List<string>, List<char>> Operate(string path)
         //Get all function and create a button for each with their symbol
         {
             List<string> operation = new List<string>();
@@ -27,8 +27,8 @@ namespace SuperCalculator
 
             try
             {
-                string path = Directory.GetCurrentDirectory();
-                Assembly dll = Assembly.LoadFile(path + @"\FunctionLibrary.dll");
+                //string path = Directory.GetCurrentDirectory();
+                Assembly dll = Assembly.LoadFile(path);
                 Type[] types = dll.GetExportedTypes();
                 Console.WriteLine("length of type : " + types.Length);
 

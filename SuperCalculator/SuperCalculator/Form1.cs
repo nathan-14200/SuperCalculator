@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace SuperCalculator
 {
@@ -25,9 +26,10 @@ namespace SuperCalculator
             //Allow on pressed key events
             this.KeyPreview = true;
             AllocConsole();
-            //Initialize available function
-            function = LoadingFunction.Operate().Item1;
-            acceptedKey = LoadingFunction.Operate().Item2;
+            //Initialize default available function
+            string path = Directory.GetCurrentDirectory();
+            function = LoadingFunction.Operate(path + @"\FunctionLibrary.dll").Item1;
+            acceptedKey = LoadingFunction.Operate(path + @"\FunctionLibrary.dll").Item2;
 
 
             InitButtons(acceptedKey);
@@ -188,5 +190,28 @@ namespace SuperCalculator
             Result.AppendText(result);
             historic = new List<string>();
         }
+
+        private void ChargeButton_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog SearchDialog = new OpenFileDialog();
+            SearchDialog.InitialDirectory = "c:\\";
+            SearchDialog.Filter = "dll files (*.dll)|*.dll";
+            SearchDialog.FilterIndex = 2;
+            SearchDialog.RestoreDirectory = true;
+            try
+            {
+                if(SearchDialog.ShowDialog() == DialogResult.OK)
+                {                    
+                    string filePath = SearchDialog.FileName;
+                    Console.WriteLine(filePath);
+                    LoadingFunction.Operate(filePath);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+            }
+        }
     }
 }
+
