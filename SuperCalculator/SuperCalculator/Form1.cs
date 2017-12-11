@@ -20,7 +20,9 @@ namespace SuperCalculator
         //stock the special char used for computing (/,%,+,...)
         private static List<char> acceptedKey = new List<char>();
         private static List<string> function = new List<string>();
+        private static List<string> helpMessage = new List<string>();
         private static List<Button> myButton = new List<Button>();
+
 
         public Calculator()
         {
@@ -29,8 +31,11 @@ namespace SuperCalculator
             AllocConsole();
             //Initialize default available function
             string path = Directory.GetCurrentDirectory();
-            function = LoadingFunction.Operate(path + @"\FunctionLibrary.dll").Item1;
-            acceptedKey = LoadingFunction.Operate(path + @"\FunctionLibrary.dll").Item2;
+            var data = LoadingFunction.Operate(path + @"\FunctionLibrary.dll");
+            function = data.Item1;
+            acceptedKey = data.Item2;
+            helpMessage = data.Item3;
+            
 
 
             InitButtons(acceptedKey);
@@ -159,9 +164,19 @@ namespace SuperCalculator
                     Button button = new Button();
                     button.Name = symbol[size].ToString();
                     button.Text = symbol[size].ToString();
+                    
                     button.Location = new Point(x, 40 * i + 10);
                     button.Click += new EventHandler(ButtonClick);
                     button.AutoSize = true;
+                    
+                    //first 10 buttons are digits
+                    if(size > 9)
+                    {
+                        //Show help message when mouser over button
+                        button.Tag = helpMessage[size-10];
+                        button.MouseHover += new EventHandler(Button_MouseHover);
+
+                    }
                     this.Controls.Add(button);
                     i++;
                     size++;
@@ -174,6 +189,15 @@ namespace SuperCalculator
                     x += 100;
                 }               
             }            
+        }
+
+
+        private void Button_MouseHover(object sender, EventArgs e)
+        {
+            //Allow ToolTip when mouse over button
+            Button button = (Button)sender;
+            ToolTip ToolTip1 = new ToolTip();
+            ToolTip1.SetToolTip(button, button.Tag.ToString());
         }
 
 
@@ -222,8 +246,10 @@ namespace SuperCalculator
                     string filePath = SearchDialog.FileName;
                     Console.WriteLine(filePath);
                     //Must update our list
-                    function = LoadingFunction.Operate(filePath).Item1;
-                    acceptedKey = LoadingFunction.Operate(filePath).Item2;
+                    var data = LoadingFunction.Operate(filePath);
+                    function = data.Item1;
+                    acceptedKey = data.Item2;
+                    helpMessage = data.Item3;
                 }
             }
             catch (Exception ex)
@@ -231,6 +257,7 @@ namespace SuperCalculator
                 MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
             }
         }
+
     }
 }
 

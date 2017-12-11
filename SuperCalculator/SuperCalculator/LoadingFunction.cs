@@ -12,12 +12,13 @@ namespace SuperCalculator
     {
 
 
-        public static Tuple<List<string>, List<char>> Operate(string path)
+        public static Tuple<List<string>, List<char>, List<string>> Operate(string path)
         //Get all function and create a button for each with their symbol
         {
+            List<string> helpMessage = new List<string>();
             List<string> operation = new List<string>();
             List<char> acceptedKeys = new List<char>();
-            Tuple<List<string>, List<char>> result = Tuple.Create(operation, acceptedKeys);
+            Tuple<List<string>, List<char>, List<string>> result = Tuple.Create(operation, acceptedKeys, helpMessage);
 
             //Add all digits to the accepted keys
             for (int i = 0; i < 10; i++)
@@ -50,6 +51,10 @@ namespace SuperCalculator
                             object temp = Activator.CreateInstance(type);
                             string s = (string)type.InvokeMember("get_Symbol", BindingFlags.InvokeMethod, null, temp, null);
                             acceptedKeys.Add(Char.Parse(s));
+
+                            string m = (string)type.InvokeMember("get_HelpMessage", BindingFlags.InvokeMethod, null, temp, null);
+                            helpMessage.Add(m);
+
                         }
                     }                    
                 }
