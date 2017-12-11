@@ -31,6 +31,8 @@
             this.Result = new System.Windows.Forms.TextBox();
             this.Input = new System.Windows.Forms.TextBox();
             this.Compute = new System.Windows.Forms.Button();
+            this.SaveButton = new System.Windows.Forms.Button();
+            this.ChargeButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Result
@@ -62,14 +64,38 @@
             this.Compute.UseVisualStyleBackColor = true;
             this.Compute.Click += new System.EventHandler(this.Compute_Click);
             // 
+            // SaveButton
+            // 
+            this.SaveButton.Location = new System.Drawing.Point(541, 419);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(96, 35);
+            this.SaveButton.TabIndex = 3;
+            this.SaveButton.Text = "Save";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
+            // 
+            // ChargeButton
+            // 
+            this.ChargeButton.Location = new System.Drawing.Point(13, 461);
+            this.ChargeButton.Name = "ChargeButton";
+            this.ChargeButton.Size = new System.Drawing.Size(145, 36);
+            this.ChargeButton.TabIndex = 4;
+            this.ChargeButton.Text = "Charge a DLL";
+            this.ChargeButton.UseVisualStyleBackColor = true;
+            this.ChargeButton.Click += new System.EventHandler(this.ChargeButton_Click);
+            // 
             // Calculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(547, 472);
+            this.AutoSize = true;
+            this.ClientSize = new System.Drawing.Size(668, 509);
+            this.Controls.Add(this.ChargeButton);
+            this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.Compute);
             this.Controls.Add(this.Input);
             this.Controls.Add(this.Result);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Calculator";
             this.Text = "Calculator";
             this.Load += new System.EventHandler(this.Calculator_Load);
@@ -83,6 +109,8 @@
         private System.Windows.Forms.TextBox Result;
         private System.Windows.Forms.TextBox Input;
         private System.Windows.Forms.Button Compute;
+        private System.Windows.Forms.Button SaveButton;
+        private System.Windows.Forms.Button ChargeButton;
     }
 }
 
