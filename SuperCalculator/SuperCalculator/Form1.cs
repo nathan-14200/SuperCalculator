@@ -20,6 +20,7 @@ namespace SuperCalculator
         //stock the special char used for computing (/,%,+,...)
         private static List<char> acceptedKey = new List<char>();
         private static List<string> function = new List<string>();
+        private static List<Button> myButton = new List<Button>();
 
         public Calculator()
         {
@@ -143,6 +144,9 @@ namespace SuperCalculator
         
         private void InitButtons(List<char> symbol)
         {
+            //Delete all existing button an reinit myButton
+            DestroyButton();
+
             int x = 450;
             int size = 0;
             int i = 0;
@@ -161,7 +165,8 @@ namespace SuperCalculator
                     this.Controls.Add(button);
                     i++;
                     size++;
-                    
+
+                    myButton.Add(button);
                 }
                 else
                 {
@@ -170,6 +175,18 @@ namespace SuperCalculator
                 }               
             }            
         }
+
+
+        private void DestroyButton()
+        {
+            foreach(Button button in myButton)
+            {
+                this.Controls.Remove(button);
+            }
+
+            myButton = new List<Button>();
+        }
+
 
         private void ButtonClick(object sender, EventArgs e)
         {
@@ -204,7 +221,9 @@ namespace SuperCalculator
                 {                    
                     string filePath = SearchDialog.FileName;
                     Console.WriteLine(filePath);
-                    LoadingFunction.Operate(filePath);
+                    //Must update our list
+                    function = LoadingFunction.Operate(filePath).Item1;
+                    acceptedKey = LoadingFunction.Operate(filePath).Item2;
                 }
             }
             catch (Exception ex)
