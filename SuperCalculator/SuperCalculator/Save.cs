@@ -14,19 +14,19 @@ namespace SuperCalculator
             string path = Directory.GetCurrentDirectory();
             try
             {
-                using (StreamWriter file = File.AppendText("log.txt"))
+                using (StreamWriter file = File.AppendText("historic.txt"))
                 {
                     foreach(string line in historic)
                     {
                         file.WriteLine(line);
                     }
 
-                    return "Successfully saved";
+                    return "Successfully saved\r\n";
                 }
             }
             catch
             {
-                return "Error could not save";
+                return "Error could not save\r\n";
             }
             
         }

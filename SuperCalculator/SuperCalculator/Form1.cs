@@ -165,10 +165,8 @@ namespace SuperCalculator
                 {
                     i = 0;
                     x += 100;
-                }
-                
-            }
-            
+                }               
+            }            
         }
 
         private void ButtonClick(object sender, EventArgs e)
@@ -184,5 +182,11 @@ namespace SuperCalculator
 
         }
 
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            string result = Save.ToText(historic);
+            Result.AppendText(result);
+            historic = new List<string>();
+        }
     }
 }
