@@ -100,7 +100,8 @@ namespace SuperCalculator
 
             if(CheckMultipleOperator(line))
             {
-                string result = Computer.Computing(line, function, acceptedKey);
+                //Result type must accpet toString()
+                string result = Computer.Computing(line, function, acceptedKey).ToString();
 
                 //Add to historic to save later in text file
                 historic.Add(line);

@@ -31,6 +31,7 @@
             this.Result = new System.Windows.Forms.TextBox();
             this.Input = new System.Windows.Forms.TextBox();
             this.Compute = new System.Windows.Forms.Button();
+            this.SaveButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // Result
@@ -62,12 +63,22 @@
             this.Compute.UseVisualStyleBackColor = true;
             this.Compute.Click += new System.EventHandler(this.Compute_Click);
             // 
+            // SaveButton
+            // 
+            this.SaveButton.Location = new System.Drawing.Point(541, 419);
+            this.SaveButton.Name = "SaveButton";
+            this.SaveButton.Size = new System.Drawing.Size(96, 35);
+            this.SaveButton.TabIndex = 3;
+            this.SaveButton.Text = "Save";
+            this.SaveButton.UseVisualStyleBackColor = true;
+            // 
             // Calculator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(547, 472);
+            this.ClientSize = new System.Drawing.Size(686, 509);
+            this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.Compute);
             this.Controls.Add(this.Input);
             this.Controls.Add(this.Result);
@@ -85,6 +96,7 @@
         private System.Windows.Forms.TextBox Result;
         private System.Windows.Forms.TextBox Input;
         private System.Windows.Forms.Button Compute;
+        private System.Windows.Forms.Button SaveButton;
     }
 }
 
