@@ -13,7 +13,7 @@ namespace FunctionLibrary
         {
             get
             {
-                return "Does the difference between two numbers";
+                return "Does the difference between a and b (a-b)";
             }
         }
 

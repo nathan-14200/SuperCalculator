@@ -12,13 +12,13 @@ namespace SuperCalculator
     {
 
 
-        public static Tuple<List<string>, List<string>> Operate(string path)
+        public static Tuple<Dictionary<string, string[]>, List<string>> Operate(string path)
         //Get all function and create a button for each with their Name
         {
             List<string> helpMessage = new List<string>();
-            List<string> operation = new List<string>();
+            Dictionary<string,string[]> operation = new Dictionary<string, string[]>();
             
-            Tuple<List<string>, List<string>> result = Tuple.Create(operation, helpMessage);
+            Tuple<Dictionary<string, string[]>, List<string>> result = Tuple.Create(operation, helpMessage);
 
             try
             {
@@ -36,12 +36,14 @@ namespace SuperCalculator
                     {
 
                         Console.WriteLine(member.Name);
-                        //Only take classes that have function get_Symbol
+                        //Only take classes that have function get_Name
                         if (!type.ContainsGenericParameters && member.Name == "get_Name")
                         {
                             object temp = Activator.CreateInstance(type);
-                            string s = (string)type.InvokeMember("get_Name", BindingFlags.InvokeMethod, null, temp, null);
-                            operation.Add(s);
+                            string name = (string)type.InvokeMember("get_Name", BindingFlags.InvokeMethod, null, temp, null);
+                            string[] param = (string[])type.InvokeMember("get_ParametersName", BindingFlags.InvokeMethod, null, temp, null);
+
+                            operation[name] = param;
 
                             string m = (string)type.InvokeMember("get_HelpMessage", BindingFlags.InvokeMethod, null, temp, null);
                             helpMessage.Add(m);
@@ -52,9 +54,9 @@ namespace SuperCalculator
                 
                 //Check the available functions in Console
                 Console.WriteLine("Function's name");
-                foreach(string name in operation)
+                foreach(KeyValuePair<string, string[]> name in operation)
                 {
-                    Console.WriteLine(name);
+                    Console.WriteLine("key : " + name.Key + " " + name.Value.Count());
                 }
                 return result;
             }

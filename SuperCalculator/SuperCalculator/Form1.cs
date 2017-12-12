@@ -18,11 +18,14 @@ namespace SuperCalculator
 
         private static List<string> historic = new List<string>();
         //stock the special char used for computing (/,%,+,...)
-        private static List<char> acceptedKey = new List<char>();
-
-        private static List<string> function = new List<string>();
+        private static string filePath = "";
+        
+        private static string currentFunction = "";
+        private static Dictionary<string,string[]> function = new Dictionary<string, string[]>();
         private static List<string> helpMessage = new List<string>();
         private static List<Button> myButton = new List<Button>();
+        private static List<TextBox> myInputs = new List<TextBox>();
+        private static List<Label> myLabels = new List<Label>();
 
 
         public Calculator()
@@ -36,11 +39,8 @@ namespace SuperCalculator
             function = data.Item1;
             helpMessage = data.Item2;
             
-
-
-            InitButtons(acceptedKey);
             InitializeComponent();
-            Input.KeyPress += new KeyPressEventHandler(KeypressCheck);
+            
  
         }
         //Allow to get Console while in Window mode
@@ -54,22 +54,27 @@ namespace SuperCalculator
             this.AcceptButton = Compute;
         }
 
-        private void historic_TextChanged(object sender, EventArgs e)
-            //Useless for now
-            //Maybe for load data?
+        private void UpdateHistoric(List<string> allInputs, string result)
         {
-            string text = "";
-
-            foreach(string line in historic)
+            string line = currentFunction + " : " + allInputs[0];
+            for(int i =1; i < allInputs.Count(); i++)
             {
-                text += line + "\r\n";
+                line += " and " + allInputs[i];
             }
 
-            //Result.Text = text;
+
+
+            historic.Add(line);
+            historic.Add("=" + result);
+            //Using AppendText makes the scrollbar to follow new line
+            Result.AppendText(line + "\r\n");
+            Result.AppendText("=" + result + "\r\n");
+            //#Obsolete historic_TextChanged(historic, e);
+            fName.Text = "";
         }
 
         private void KeypressCheck(object sender, KeyPressEventArgs e)
-            //Check if pressed key is a digit or an accepted key (+control keys)
+            //Check if pressed key is a digit, a point or a control key 
             //otherwise handle the char and it doesn't appear in Input.Text
         {
             
@@ -86,7 +91,7 @@ namespace SuperCalculator
 
         private bool InputLineCheck(object sender, KeyPressEventArgs e)
         {
-            int InputSize = Input.Text.Length;
+            int InputSize = fName.Text.Length;
             //input can't start with a point
             if(InputSize < 1 && !Char.IsDigit(e.KeyChar))
             {
@@ -94,51 +99,41 @@ namespace SuperCalculator
             }
             //one point per line
             int point = 0;
-            for (int i = 0; i < Input.Text.Count() - 1; i++)
+            for (int i = 0; i < fName.Text.Count() - 1; i++)
             {
-                if (Input.Text[i] == '.')
+                if (fName.Text[i] == '.')
                 {
                     point += 1;
                 }
             }
-
             if (e.KeyChar == '.' && point > 0)
             {
                 return false;
             }
-
             return true;
         }
 
 
         private void Compute_Click(object sender, EventArgs e)
         {
-            string line = Input.Text;
+            List<string> allInputs = new List<string>();
 
-            if(CheckMultipleOperator(line))
+            foreach(TextBox t in myInputs)
             {
-                //Result type must accpet toString()
-                string result = Computer.Computing(line, function, acceptedKey).ToString();
-
-                //Add to historic to save later in text file
-                historic.Add(line);
-                historic.Add("=" + result);
-
-                //Using AppendText makes the scrollbar to follow new line
-                Result.AppendText(line + "\r\n");
-                Result.AppendText("=" + result + "\r\n");
-                //#Obsolete historic_TextChanged(historic, e);
-                Input.Text = "";
+                allInputs.Add(t.Text);
             }
-            else
-            {
-                MessageBox.Show("Only one operator per compute");
-                Input.Text = "";
-            }
+
+            //Result type must accept toString()
+            string result = Computer.Computing(currentFunction, allInputs, filePath).ToString();
+            //Add to historic to save later in text file
+            UpdateHistoric(allInputs, result);
+
+            
             
         }
 
         private bool CheckMultipleOperator(string input)
+            //Useless for now
         {
             bool test = true;
             //Delete all numbers from input text
@@ -155,42 +150,89 @@ namespace SuperCalculator
             }
         }
 
+
+        private void InitInputs()
+        {
+            DestroyInputs();
+            
+
+            fName.Text = "Selected Function: " + currentFunction;
+            int x = 60;
+            
+            Console.WriteLine("size = " + function.Count());
+
+            foreach (KeyValuePair<string, string[]> el in function)
+            {
+                if (el.Key == currentFunction)
+                {
+                    for (int i = 0; i < el.Value.Count(); i++)
+                    {
+                        Label name = new Label();
+                        name.Location = new Point(0, 40 * i + 300);
+                        name.Text = el.Value[i];
+                        name.Width = 50;
+                        TextBox textbox = new TextBox();
+                        textbox.Name = el.Key;
+                        textbox.KeyPress += new KeyPressEventHandler(KeypressCheck);
+
+                        textbox.Location = new Point(x, 40 * i + 300);
+                        this.Controls.Add(name);
+                        this.Controls.Add(textbox);
+                        myInputs.Add(textbox);
+                        myLabels.Add(name);                    
+                    }
+                }
+            }
+
+        }
+
+
+        private void DestroyInputs()
+        {
+            foreach (TextBox textbox in myInputs)
+            {
+                this.Controls.Remove(textbox);
+            }
+
+            foreach(Label label in myLabels)
+            {
+                this.Controls.Remove(label);
+            }
+
+            myInputs = new List<TextBox>();
+            myLabels = new List<Label>();
+        }
+
         
-        private void InitButtons(List<char> symbol)
+        private void InitButtons()
         {
             //Delete all existing button an reinit myButton
             DestroyButton();
 
-            int x = 450;
-            int size = 0;
+            int x = 400;
             int i = 0;
-            Console.WriteLine("size = " + symbol.Count());
+            Console.WriteLine("size = " + function.Count());
 
-            while (size < symbol.Count())
+            foreach(KeyValuePair<string, string[]> el in function)
             {
                 if (i < 10)
                 {
                     Button button = new Button();
-                    button.Name = symbol[size].ToString();
-                    button.Text = symbol[size].ToString();
+                    button.Name = el.Key;
+                    button.Text = el.Key;
                     
                     button.Location = new Point(x, 40 * i + 10);
                     button.Click += new EventHandler(ButtonClick);
                     button.AutoSize = true;
                     
-                    //first 10 buttons are digits
-                    if(size > 9)
-                    {
-                        //Show help message when mouser over button
-                        button.Tag = helpMessage[size-10];
-                        button.MouseHover += new EventHandler(Button_MouseHover);
+                    //Show HelpMessage while mouse on button
+                    button.Tag = helpMessage[i];
+                    button.MouseHover += new EventHandler(Button_MouseHover);
 
-                    }
                     this.Controls.Add(button);
-                    i++;
-                    size++;
-
                     myButton.Add(button);
+
+                    i++;
                 }
                 else
                 {
@@ -224,6 +266,8 @@ namespace SuperCalculator
         private void ButtonClick(object sender, EventArgs e)
         {
             Button button = (Button) sender;
+            currentFunction = button.Text;
+            InitInputs();
             //Button must execute the right function
 
         }
@@ -246,12 +290,13 @@ namespace SuperCalculator
             {
                 if(SearchDialog.ShowDialog() == DialogResult.OK)
                 {                    
-                    string filePath = SearchDialog.FileName;
+                    filePath = SearchDialog.FileName;
                     Console.WriteLine(filePath);
                     //Must update our list
                     var data = LoadingFunction.Operate(filePath);
                     function = data.Item1;
                     helpMessage = data.Item2;
+                    InitButtons();
                 }
             }
             catch (Exception ex)
@@ -259,7 +304,6 @@ namespace SuperCalculator
                 MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
             }
         }
-
     }
 }
 
