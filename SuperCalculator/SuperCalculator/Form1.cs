@@ -19,6 +19,7 @@ namespace SuperCalculator
         private static List<string> historic = new List<string>();
         //stock the special char used for computing (/,%,+,...)
         private static List<char> acceptedKey = new List<char>();
+
         private static List<string> function = new List<string>();
         private static List<string> helpMessage = new List<string>();
         private static List<Button> myButton = new List<Button>();
@@ -33,8 +34,7 @@ namespace SuperCalculator
             string path = Directory.GetCurrentDirectory();
             var data = LoadingFunction.Operate(path + @"\FunctionLibrary.dll");
             function = data.Item1;
-            acceptedKey = data.Item2;
-            helpMessage = data.Item3;
+            helpMessage = data.Item2;
             
 
 
@@ -73,7 +73,7 @@ namespace SuperCalculator
             //otherwise handle the char and it doesn't appear in Input.Text
         {
             
-            if(!acceptedKey.Contains(e.KeyChar) && !Char.IsControl(e.KeyChar))
+            if( !char.IsDigit(e.KeyChar) && !Char.IsControl(e.KeyChar) && e.KeyChar!='.')
             {
                 e.Handled = true;
             }
@@ -87,16 +87,25 @@ namespace SuperCalculator
         private bool InputLineCheck(object sender, KeyPressEventArgs e)
         {
             int InputSize = Input.Text.Length;
-            //input can't start with an operator
+            //input can't start with a point
             if(InputSize < 1 && !Char.IsDigit(e.KeyChar))
             {
                  return false;
             }
-            //2 operators can't be next to each other
-            else if(InputSize > 1 && !Char.IsDigit(e.KeyChar) &&!Char.IsDigit(Input.Text[InputSize-1]))
+            //one point per line
+            int point = 0;
+            for (int i = 0; i < Input.Text.Count() - 1; i++)
+            {
+                if (Input.Text[i] == '.')
                 {
-                    return false;
+                    point += 1;
                 }
+            }
+
+            if (e.KeyChar == '.' && point > 0)
+            {
+                return false;
+            }
 
             return true;
         }
@@ -215,13 +224,7 @@ namespace SuperCalculator
         private void ButtonClick(object sender, EventArgs e)
         {
             Button button = (Button) sender;
-            //Button pressed must respect InputLineCheck
-            KeyPressEventArgs key = new KeyPressEventArgs(Char.Parse(button.Text));
-            if (InputLineCheck(sender, key))
-            {
-                Input.AppendText(button.Text);
-            }
-
+            //Button must execute the right function
 
         }
 
@@ -248,8 +251,7 @@ namespace SuperCalculator
                     //Must update our list
                     var data = LoadingFunction.Operate(filePath);
                     function = data.Item1;
-                    acceptedKey = data.Item2;
-                    helpMessage = data.Item3;
+                    helpMessage = data.Item2;
                 }
             }
             catch (Exception ex)
