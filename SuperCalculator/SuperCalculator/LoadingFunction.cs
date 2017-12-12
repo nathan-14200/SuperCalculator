@@ -12,19 +12,13 @@ namespace SuperCalculator
     {
 
 
-        public static Tuple<List<string>, List<char>, List<string>> Operate(string path)
-        //Get all function and create a button for each with their symbol
+        public static Tuple<List<string>, List<string>> Operate(string path)
+        //Get all function and create a button for each with their Name
         {
             List<string> helpMessage = new List<string>();
             List<string> operation = new List<string>();
-            List<char> acceptedKeys = new List<char>();
-            Tuple<List<string>, List<char>, List<string>> result = Tuple.Create(operation, acceptedKeys, helpMessage);
-
-            //Add all digits to the accepted keys
-            for (int i = 0; i < 10; i++)
-            {
-                acceptedKeys.Add(Char.Parse(i.ToString()));
-            }
+            
+            Tuple<List<string>, List<string>> result = Tuple.Create(operation, helpMessage);
 
             try
             {
@@ -43,26 +37,17 @@ namespace SuperCalculator
 
                         Console.WriteLine(member.Name);
                         //Only take classes that have function get_Symbol
-                        if (!type.ContainsGenericParameters && member.Name == "get_Symbol")
+                        if (!type.ContainsGenericParameters && member.Name == "get_Name")
                         {
-                            
-                            operation.Add(type.Name);
-
                             object temp = Activator.CreateInstance(type);
-                            string s = (string)type.InvokeMember("get_Symbol", BindingFlags.InvokeMethod, null, temp, null);
-                            acceptedKeys.Add(Char.Parse(s));
+                            string s = (string)type.InvokeMember("get_Name", BindingFlags.InvokeMethod, null, temp, null);
+                            operation.Add(s);
 
                             string m = (string)type.InvokeMember("get_HelpMessage", BindingFlags.InvokeMethod, null, temp, null);
                             helpMessage.Add(m);
 
                         }
                     }                    
-                }
-                //Check the char in acceptedKeys in Console
-                Console.WriteLine("Accepted Keys");
-                foreach(char c in acceptedKeys)
-                {
-                    Console.WriteLine(c);
                 }
                 
                 //Check the available functions in Console
