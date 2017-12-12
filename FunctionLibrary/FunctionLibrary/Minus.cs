@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace FunctionLibrary
 {
-    public class Minus : Function<string>
+    public class Minus : SuperComputer.Function<string>
     {
         public string HelpMessage
         {
             get
             {
-                return "does the difference between two numbers";
+                return "Does the difference between two numbers";
             }
         }
 
@@ -37,13 +37,6 @@ namespace FunctionLibrary
             }
         }
 
-        public string Symbol
-        {
-            get
-            {
-                return "-";
-            }
-        }
 
         public string Evaluate(params string[] args)
         {
@@ -57,7 +50,7 @@ namespace FunctionLibrary
             }
             catch
             {
-                return "Could not compute Minus function ";
+                return "Could not compute Minus function";
             }
         }
     }

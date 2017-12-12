@@ -6,16 +6,8 @@ using System.Threading.Tasks;
 
 namespace FunctionLibrary
 {
-    public class Add : Function<string>
+    public class Add : SuperComputer.Function<string>
     {
-
-        public string Symbol
-        {
-            get
-            {
-                return "+";
-            }
-        }
 
         public string Name
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FunctionLibrary
 {
-    public interface Function<T>
+    public interface Functio<T>
     {
         string Symbol { get; }
 
