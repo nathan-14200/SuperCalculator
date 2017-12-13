@@ -70,7 +70,12 @@ namespace SuperCalculator
             Result.AppendText(line + "\r\n");
             Result.AppendText("=" + result + "\r\n");
             //#Obsolete historic_TextChanged(historic, e);
-            fName.Text = "";
+
+            //clear all inputs
+            foreach(TextBox textbox in myInputs)
+            {
+                textbox.Text = "";
+            }
         }
 
         private void KeypressCheck(object sender, KeyPressEventArgs e)
@@ -78,7 +83,7 @@ namespace SuperCalculator
             //otherwise handle the char and it doesn't appear in Input.Text
         {
             
-            if( !char.IsDigit(e.KeyChar) && !Char.IsControl(e.KeyChar) && e.KeyChar!='.')
+            if( !char.IsDigit(e.KeyChar) && !Char.IsControl(e.KeyChar) && e.KeyChar!=',')
             {
                 e.Handled = true;
             }
@@ -91,7 +96,9 @@ namespace SuperCalculator
 
         private bool InputLineCheck(object sender, KeyPressEventArgs e)
         {
-            int InputSize = fName.Text.Length;
+            TextBox input = (TextBox)sender;
+
+            int InputSize = input.Text.Length;
             //input can't start with a point
             if(InputSize < 1 && !Char.IsDigit(e.KeyChar))
             {
@@ -99,14 +106,14 @@ namespace SuperCalculator
             }
             //one point per line
             int point = 0;
-            for (int i = 0; i < fName.Text.Count() - 1; i++)
+            for (int i = 0; i < input.Text.Count(); i++)
             {
-                if (fName.Text[i] == '.')
+                if (input.Text[i] == ',')
                 {
                     point += 1;
                 }
             }
-            if (e.KeyChar == '.' && point > 0)
+            if (e.KeyChar == ',' && point > 0)
             {
                 return false;
             }
