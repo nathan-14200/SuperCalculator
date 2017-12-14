@@ -1,0 +1,2 @@
+C:\Users\natha\Source\Repos\SuperCalculator\FunctionLibrary\FunctionLibrary\obj\Debug\FunctionLibrary.csprojResolveAssemblyReference.cache
+C:\Users\natha\Source\Repos\SuperCalculator\FunctionLibrary\FunctionLibrary\obj\Debug\FunctionLibrary.csproj.CoreCompileInputs.cache

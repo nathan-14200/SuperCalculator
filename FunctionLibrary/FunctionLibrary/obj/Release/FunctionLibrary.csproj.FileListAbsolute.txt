@@ -1,0 +1,7 @@
+C:\Users\natha\Source\Repos\SuperCalculator\FunctionLibrary\FunctionLibrary\obj\Release\FunctionLibrary.csproj.CoreCompileInputs.cache
+C:\Users\natha\Source\Repos\SuperCalculator\FunctionLibrary\FunctionLibrary\obj\Release\FunctionLibrary.csprojResolveAssemblyReference.cache
+C:\Users\natha\Source\Repos\SuperCalculator\FunctionLibrary\FunctionLibrary\bin\Release\FunctionLibrary.dll
+C:\Users\natha\Source\Repos\SuperCalculator\FunctionLibrary\FunctionLibrary\bin\Release\FunctionLibrary.pdb
+C:\Users\natha\Source\Repos\SuperCalculator\FunctionLibrary\FunctionLibrary\bin\Release\SuperComputer.dll
+C:\Users\natha\Source\Repos\SuperCalculator\FunctionLibrary\FunctionLibrary\obj\Release\FunctionLibrary.dll
+C:\Users\natha\Source\Repos\SuperCalculator\FunctionLibrary\FunctionLibrary\obj\Release\FunctionLibrary.pdb

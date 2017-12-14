@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.Result = new System.Windows.Forms.TextBox();
+            this.ComputeResult = new System.Windows.Forms.TextBox();
             this.fName = new System.Windows.Forms.TextBox();
             this.Compute = new System.Windows.Forms.Button();
             this.SaveButton = new System.Windows.Forms.Button();
@@ -37,16 +37,16 @@
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // Result
+            // ComputeResult
             // 
-            this.Result.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.Result.Location = new System.Drawing.Point(12, 12);
-            this.Result.Multiline = true;
-            this.Result.Name = "Result";
-            this.Result.ReadOnly = true;
-            this.Result.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.Result.Size = new System.Drawing.Size(425, 384);
-            this.Result.TabIndex = 0;
+            this.ComputeResult.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.ComputeResult.Location = new System.Drawing.Point(12, 12);
+            this.ComputeResult.Multiline = true;
+            this.ComputeResult.Name = "ComputeResult";
+            this.ComputeResult.ReadOnly = true;
+            this.ComputeResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.ComputeResult.Size = new System.Drawing.Size(425, 384);
+            this.ComputeResult.TabIndex = 0;
             // 
             // fName
             // 
@@ -107,7 +107,7 @@
             this.ClientSize = new System.Drawing.Size(668, 509);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.fName);
-            this.Controls.Add(this.Result);
+            this.Controls.Add(this.ComputeResult);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "Calculator";
             this.Text = "Calculator";
@@ -121,7 +121,7 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox Result;
+        private System.Windows.Forms.TextBox ComputeResult;
         private System.Windows.Forms.TextBox fName;
         private System.Windows.Forms.Button Compute;
         private System.Windows.Forms.Button SaveButton;

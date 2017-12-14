@@ -19,9 +19,9 @@ namespace SuperCalculator
         private static List<string> historic = new List<string>();
         //stock the special char used for computing (/,%,+,...)
         private static string filePath = "";
-        
+
         private static string currentFunction = "";
-        private static Dictionary<string,string[]> function = new Dictionary<string, string[]>();
+        private static Dictionary<string, string[]> function = new Dictionary<string, string[]>();
         private static List<string> helpMessage = new List<string>();
         private static List<Button> myButton = new List<Button>();
         private static List<TextBox> myInputs = new List<TextBox>();
@@ -33,17 +33,17 @@ namespace SuperCalculator
             //Allow on pressed key events
             this.KeyPreview = true;
             AllocConsole();
+            Console.WriteLine("in Console");
             //Initialize default available function
             string path = Directory.GetCurrentDirectory();
-            var data = LoadingFunction.Operate(path + @"\FunctionLibrary.dll");
-            function = data.Item1;
-            helpMessage = data.Item2;
-            
+
+
             InitializeComponent();
-            
- 
+            LoadHistoric();
+
         }
         //Allow to get Console while in Window mode
+
         [DllImport("kernel32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool AllocConsole();
@@ -57,37 +57,34 @@ namespace SuperCalculator
         private void UpdateHistoric(List<string> allInputs, string result)
         {
             string line = currentFunction + " : " + allInputs[0];
-            for(int i =1; i < allInputs.Count(); i++)
+            for (int i = 1; i < allInputs.Count(); i++)
             {
                 line += " and " + allInputs[i];
             }
 
-
-
             historic.Add(line);
             historic.Add("=" + result);
             //Using AppendText makes the scrollbar to follow new line
-            Result.AppendText(line + "\r\n");
-            Result.AppendText("=" + result + "\r\n");
-            //#Obsolete historic_TextChanged(historic, e);
+            ComputeResult.AppendText(line + "\r\n");
+            ComputeResult.AppendText("=" + result + "\r\n");
 
             //clear all inputs
-            foreach(TextBox textbox in myInputs)
+            foreach (TextBox textbox in myInputs)
             {
                 textbox.Text = "";
             }
         }
 
         private void KeypressCheck(object sender, KeyPressEventArgs e)
-            //Check if pressed key is a digit, a point or a control key 
-            //otherwise handle the char and it doesn't appear in Input.Text
+        //Check if pressed key is a digit, a point or a control key 
+        //otherwise handle the char and it doesn't appear in Input.Text
         {
-            
-            if( !char.IsDigit(e.KeyChar) && !Char.IsControl(e.KeyChar) && e.KeyChar!=',')
+
+            if (!char.IsDigit(e.KeyChar) && !Char.IsControl(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != '-')
             {
                 e.Handled = true;
             }
-            else if(!Char.IsControl(e.KeyChar) && !InputLineCheck(sender, e))
+            else if (!Char.IsControl(e.KeyChar) && !InputLineCheck(sender, e))
             {
                 e.Handled = true;
             }
@@ -100,11 +97,11 @@ namespace SuperCalculator
 
             int InputSize = input.Text.Length;
             //input can't start with a point
-            if(InputSize < 1 && !Char.IsDigit(e.KeyChar))
+            if (InputSize < 1 && (e.KeyChar == ','))
             {
-                 return false;
+                return false;
             }
-            //one point per line
+            //Count the ',' in the input
             int point = 0;
             for (int i = 0; i < input.Text.Count(); i++)
             {
@@ -113,7 +110,8 @@ namespace SuperCalculator
                     point += 1;
                 }
             }
-            if (e.KeyChar == ',' && point > 0)
+            //Only one ',' and only the first char can be a '-'
+            if ((e.KeyChar == ',' && point > 0) || (e.KeyChar == '-' && input.Text.Count() > 0))
             {
                 return false;
             }
@@ -125,47 +123,37 @@ namespace SuperCalculator
         {
             List<string> allInputs = new List<string>();
 
-            foreach(TextBox t in myInputs)
+            foreach (TextBox t in myInputs)
             {
                 allInputs.Add(t.Text);
             }
 
-            //Result type must accept toString()
-            string result = Computer.Computing(currentFunction, allInputs, filePath).ToString();
-            //Add to historic to save later in text file
-            UpdateHistoric(allInputs, result);
-
-            
-            
-        }
-
-        private bool CheckMultipleOperator(string input)
-            //Useless for now
-        {
-            bool test = true;
-            //Delete all numbers from input text
-            string op = Regex.Replace(input, @"[\d]", string.Empty);
-
-            if(op.Length > 1)
+            if (Check.CheckInputs(myInputs, currentFunction))
             {
-                test = false;
-                return test;
+                //Result type must accept toString()
+                string result = Computer.Computing(currentFunction, allInputs, filePath).ToString();
+                //Add to historic to save later in text file
+                UpdateHistoric(allInputs, result);
             }
             else
             {
-                return test;
+                ComputeResult.AppendText("No function selected or one input blank");
             }
+
+
+
         }
 
 
         private void InitInputs()
+        //Init the input TextBox with the name of params in front
         {
             DestroyInputs();
-            
+
 
             fName.Text = "Selected Function: " + currentFunction;
             int x = 60;
-            
+
             Console.WriteLine("size = " + function.Count());
 
             foreach (KeyValuePair<string, string[]> el in function)
@@ -186,7 +174,7 @@ namespace SuperCalculator
                         this.Controls.Add(name);
                         this.Controls.Add(textbox);
                         myInputs.Add(textbox);
-                        myLabels.Add(name);                    
+                        myLabels.Add(name);
                     }
                 }
             }
@@ -201,7 +189,7 @@ namespace SuperCalculator
                 this.Controls.Remove(textbox);
             }
 
-            foreach(Label label in myLabels)
+            foreach (Label label in myLabels)
             {
                 this.Controls.Remove(label);
             }
@@ -210,28 +198,28 @@ namespace SuperCalculator
             myLabels = new List<Label>();
         }
 
-        
+
         private void InitButtons()
+        //Create a button for each function in function list
         {
-            //Delete all existing button an reinit myButton
             DestroyButton();
 
-            int x = 400;
+            int x = 300;
             int i = 0;
             Console.WriteLine("size = " + function.Count());
 
-            foreach(KeyValuePair<string, string[]> el in function)
+            foreach (KeyValuePair<string, string[]> el in function)
             {
                 if (i < 10)
                 {
                     Button button = new Button();
                     button.Name = el.Key;
                     button.Text = el.Key;
-                    
+
                     button.Location = new Point(x, 40 * i + 10);
                     button.Click += new EventHandler(ButtonClick);
                     button.AutoSize = true;
-                    
+
                     //Show HelpMessage while mouse on button
                     button.Tag = helpMessage[i];
                     button.MouseHover += new EventHandler(Button_MouseHover);
@@ -245,8 +233,8 @@ namespace SuperCalculator
                 {
                     i = 0;
                     x += 100;
-                }               
-            }            
+                }
+            }
         }
 
 
@@ -260,8 +248,9 @@ namespace SuperCalculator
 
 
         private void DestroyButton()
+        //Destroy button from Conrole and from myButton list
         {
-            foreach(Button button in myButton)
+            foreach (Button button in myButton)
             {
                 this.Controls.Remove(button);
             }
@@ -271,22 +260,34 @@ namespace SuperCalculator
 
 
         private void ButtonClick(object sender, EventArgs e)
+        //Set the current function and inputs related to
         {
-            Button button = (Button) sender;
+            Button button = (Button)sender;
             currentFunction = button.Text;
             InitInputs();
-            //Button must execute the right function
 
         }
 
+        private void LoadHistoric()
+        {
+            List<string> loadedHistoric = Loading.FromTextFile();
+
+            foreach(string line in loadedHistoric)
+            {
+                ComputeResult.AppendText(line + "\r\n");
+            }
+        }
+
         private void SaveButton_Click(object sender, EventArgs e)
+            //Save lines in historic to historic.txt
         {
             string result = Save.ToText(historic);
-            Result.AppendText(result);
+            ComputeResult.AppendText(result);
             historic = new List<string>();
         }
 
         private void ChargeButton_Click(object sender, EventArgs e)
+            //Charge a .dll file from selected directory by user
         {
             OpenFileDialog SearchDialog = new OpenFileDialog();
             SearchDialog.InitialDirectory = "c:\\";
@@ -298,7 +299,6 @@ namespace SuperCalculator
                 if(SearchDialog.ShowDialog() == DialogResult.OK)
                 {                    
                     filePath = SearchDialog.FileName;
-                    Console.WriteLine(filePath);
                     //Must update our list
                     var data = LoadingFunction.Operate(filePath);
                     function = data.Item1;

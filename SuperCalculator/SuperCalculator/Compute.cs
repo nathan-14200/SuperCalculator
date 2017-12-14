@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SuperCalculator
 {
@@ -41,8 +42,7 @@ namespace SuperCalculator
                             {
                                 string[] var = allinputs.ToArray();
                                 //Compute with Evaluate
-                                result = (string)type.InvokeMember("Evaluate", BindingFlags.InvokeMethod, null, temp, new object[] { var });
-
+                                result = type.InvokeMember("Evaluate", BindingFlags.InvokeMethod, null, temp, new object[] { var }).ToString();
                                 //Check in Console
                                 Console.WriteLine("result =" + result);
                                 return result;
@@ -50,18 +50,18 @@ namespace SuperCalculator
                         }
                     }                 
                 }
+
+                return result;
             }
             catch (Exception e)
             {
+                MessageBox.Show(e.Message);
                 Console.WriteLine(e);
                 Console.WriteLine("Could not compute");
                 Console.ReadKey();
                 result = "Could not get result from function, Check Help message";
                 return result;
             }
-
-            return result;
         }
-
     }
 }

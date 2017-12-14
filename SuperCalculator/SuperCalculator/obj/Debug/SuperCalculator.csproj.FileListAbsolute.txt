@@ -1,0 +1,11 @@
+C:\Users\natha\Source\Repos\SuperCalculator\SuperCalculator\SuperCalculator\bin\Debug\SuperCalculator.exe.config
+C:\Users\natha\Source\Repos\SuperCalculator\SuperCalculator\SuperCalculator\bin\Debug\SuperCalculator.exe
+C:\Users\natha\Source\Repos\SuperCalculator\SuperCalculator\SuperCalculator\bin\Debug\SuperCalculator.pdb
+C:\Users\natha\Source\Repos\SuperCalculator\SuperCalculator\SuperCalculator\obj\Debug\SuperCalculator.Calculator.resources
+C:\Users\natha\Source\Repos\SuperCalculator\SuperCalculator\SuperCalculator\obj\Debug\SuperCalculator.Properties.Resources.resources
+C:\Users\natha\Source\Repos\SuperCalculator\SuperCalculator\SuperCalculator\obj\Debug\SuperCalculator.csproj.GenerateResource.Cache
+C:\Users\natha\Source\Repos\SuperCalculator\SuperCalculator\SuperCalculator\obj\Debug\SuperCalculator.csproj.CoreCompileInputs.cache
+C:\Users\natha\Source\Repos\SuperCalculator\SuperCalculator\SuperCalculator\obj\Debug\SuperCalculator.exe
+C:\Users\natha\Source\Repos\SuperCalculator\SuperCalculator\SuperCalculator\obj\Debug\SuperCalculator.pdb
+C:\Users\natha\Source\Repos\SuperCalculator\SuperCalculator\SuperCalculator\bin\Debug\SuperComputer.dll
+C:\Users\natha\Source\Repos\SuperCalculator\SuperCalculator\SuperCalculator\obj\Debug\SuperCalculator.csprojResolveAssemblyReference.cache

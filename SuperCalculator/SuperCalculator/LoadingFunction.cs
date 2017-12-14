@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SuperCalculator
 {
@@ -62,6 +63,7 @@ namespace SuperCalculator
             }
             catch (Exception e)
             {
+                MessageBox.Show("Erreur :" + e);
                 Console.WriteLine(e);
                 Console.WriteLine("Could not get the dll file");
                 Console.ReadKey();

@@ -9,16 +9,17 @@ namespace SuperCalculator
 {
     class Check
     {
-        public static bool CheckInputs(List<TextBox> myInputs)
+        public static bool CheckInputs(List<TextBox> myInputs, string currentFunction)
         {
+            //Check if a function is selected and no blank inputs
+            if(currentFunction.Count() < 1)
+            {
+                return false;
+            }
             foreach (TextBox textbox in myInputs)
             {
                 if (textbox.Text.Length < 1)
                 {
-                    return false;
-                }
-                else{
-
                     return false;
                 }
             }
