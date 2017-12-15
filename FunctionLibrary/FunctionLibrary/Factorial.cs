@@ -49,7 +49,7 @@ namespace SuperComputer
             }
             catch (FormatException ex)
             {
-                throw new EvaluationException("Le paramètre doivent être un entier.");
+                throw new EvaluationException("Le paramètre doit être un entier.");
             }
             catch (OverflowException ex)
             {
