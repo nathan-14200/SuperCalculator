@@ -10,6 +10,10 @@ namespace SuperComputer
     {
         public EvaluationException(string msg) : base(msg)
         {
+            string ShowMessageError()
+            {
+                return (msg);
+            }
         }
     }
 

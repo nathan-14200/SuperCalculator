@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SuperComputer
 {
-    public class Minus : SuperComputer.Function<string>
+    public class Minus : SuperComputer.Function<double>
     {
         public string HelpMessage
         {
@@ -29,16 +29,14 @@ namespace SuperComputer
         {
             get
             {
-                string[] param = new string[2];
-                param.SetValue("double a", 0);
-                param.SetValue("double b", 1);
+                string[] param = new string[2] { "double a", "double b" };
 
                 return param;
             }
         }
 
 
-        public string Evaluate(params string[] args)
+        public double Evaluate(params string[] args)
         {
             try
             {
@@ -46,11 +44,11 @@ namespace SuperComputer
                 double b = double.Parse(args[1]);
 
                 double result = a - b;
-                return result.ToString();
+                return result;
             }
-            catch
+            catch 
             {
-                return "Could not compute Minus function";
+                throw new EvaluationException("Could not compute Minus function");
             }
         }
     }

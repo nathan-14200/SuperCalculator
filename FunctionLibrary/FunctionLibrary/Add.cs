@@ -29,9 +29,7 @@ namespace SuperComputer
         {
             get
             {
-                string[] param = new string[2];
-                param.SetValue("float a", 0);
-                param.SetValue("float b", 1);
+                string[] param = new string[2] { "float a", "flaot b" };
 
                 return param;
             }
