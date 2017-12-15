@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FunctionLibrary
+namespace SuperComputer
 {
-    public class Add : SuperComputer.Function<string>
+    public class Add : Function<double>, IFunction
     {
 
         public string Name
@@ -37,19 +37,20 @@ namespace FunctionLibrary
             }
         }
 
-        public string Evaluate(params string[] args)
+        public double Evaluate(params string[] args)
         {
             try
             {
                 double a = double.Parse(args[0]);
                 double b = double.Parse(args[1]);
 
-                string result = (a + b).ToString();
+                double result = a + b;
+                
                 return result;
             }
             catch
             {
-                return "Could not compute Add function";
+                throw new EvaluationException("Could not compute Add function");
             }
         }
     }
