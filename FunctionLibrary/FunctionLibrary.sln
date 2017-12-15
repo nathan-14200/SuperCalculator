@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionLibrary", "FunctionLibrary\FunctionLibrary.csproj", "{817B07F5-C568-4C55-8AF3-414B53CE2F5C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuperComputer", "FunctionLibrary\SuperComputer.csproj", "{817B07F5-C568-4C55-8AF3-414B53CE2F5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +18,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {03EAA0CD-B712-4F29-A207-9E19A84BDA04}
 	EndGlobalSection
 EndGlobal

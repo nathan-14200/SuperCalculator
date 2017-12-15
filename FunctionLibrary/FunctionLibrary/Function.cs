@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SuperComputer;
 
-namespace FunctionLibrary
+namespace SuperComputer
 {
     public interface Function<T> : IFunction
     {

@@ -4,11 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FunctionLibrary
+namespace SuperComputer
 {
-    // SuperComputer.EvaluationException
-
-
     public class EvaluationException : Exception
     {
         public EvaluationException(string msg) : base(msg)
