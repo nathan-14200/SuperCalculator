@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace SuperCalculator
 {
@@ -12,18 +13,13 @@ namespace SuperCalculator
     {
 
 
-        public static Tuple<List<string>, List<char>> Operate(string path)
-        //Get all function and create a button for each with their symbol
+        public static Tuple<Dictionary<string, string[]>, List<string>> Operate(string path)
+        //Get all function and create a button for each with their Name
         {
-            List<string> operation = new List<string>();
-            List<char> acceptedKeys = new List<char>();
-            Tuple<List<string>, List<char>> result = Tuple.Create(operation, acceptedKeys);
-
-            //Add all digits to the accepted keys
-            for (int i = 0; i < 10; i++)
-            {
-                acceptedKeys.Add(Char.Parse(i.ToString()));
-            }
+            List<string> helpMessage = new List<string>();
+            Dictionary<string,string[]> operation = new Dictionary<string, string[]>();
+            
+            Tuple<Dictionary<string, string[]>, List<string>> result = Tuple.Create(operation, helpMessage);
 
             try
             {
@@ -41,35 +37,33 @@ namespace SuperCalculator
                     {
 
                         Console.WriteLine(member.Name);
-                        //Only take classes that have function get_Symbol
-                        if (!type.ContainsGenericParameters && member.Name == "get_Symbol")
+                        //Only take classes that have function get_Name
+                        if (!type.ContainsGenericParameters && member.Name == "get_Name")
                         {
-                            
-                            operation.Add(type.Name);
-
                             object temp = Activator.CreateInstance(type);
-                            string s = (string)type.InvokeMember("get_Symbol", BindingFlags.InvokeMethod, null, temp, null);
-                            acceptedKeys.Add(Char.Parse(s));
+                            string name = (string)type.InvokeMember("get_Name", BindingFlags.InvokeMethod, null, temp, null);
+                            string[] param = (string[])type.InvokeMember("get_ParametersName", BindingFlags.InvokeMethod, null, temp, null);
+
+                            operation[name] = param;
+
+                            string m = (string)type.InvokeMember("get_HelpMessage", BindingFlags.InvokeMethod, null, temp, null);
+                            helpMessage.Add(m);
+
                         }
                     }                    
-                }
-                //Check the char in acceptedKeys in Console
-                Console.WriteLine("Accepted Keys");
-                foreach(char c in acceptedKeys)
-                {
-                    Console.WriteLine(c);
                 }
                 
                 //Check the available functions in Console
                 Console.WriteLine("Function's name");
-                foreach(string name in operation)
+                foreach(KeyValuePair<string, string[]> name in operation)
                 {
-                    Console.WriteLine(name);
+                    Console.WriteLine("key : " + name.Key + " " + name.Value.Count());
                 }
                 return result;
             }
             catch (Exception e)
             {
+                MessageBox.Show("Erreur :" + e);
                 Console.WriteLine(e);
                 Console.WriteLine("Could not get the dll file");
                 Console.ReadKey();
