@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace SuperComputer
 {
-    // SuperComputer.IFunction
     public interface IFunction
     {
         string Name

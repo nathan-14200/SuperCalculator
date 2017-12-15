@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=3.9.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.9.0\lib\net45\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="SuperComputer">
       <HintPath>..\..\..\..\SuperComputer.dll</HintPath>
     </Reference>
@@ -46,10 +49,14 @@
   <ItemGroup>
     <Compile Include="Add.cs" />
     <Compile Include="EvaluationException.cs" />
+    <Compile Include="Factorial.cs" />
     <Compile Include="IFunction.cs" />
     <Compile Include="Function.cs" />
     <Compile Include="Minus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
