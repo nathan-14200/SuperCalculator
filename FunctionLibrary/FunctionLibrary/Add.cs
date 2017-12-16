@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NUnit.Framework;
 
 namespace SuperComputer
 {
@@ -51,5 +52,36 @@ namespace SuperComputer
                 throw new EvaluationException("Could not compute Add function");
             }
         }
+    }
+
+    [TestFixture()]
+    class TestAdd
+    {
+        Add add = new Add();
+
+        [Test()]
+        public void TestNameAdd()
+        {
+            Assert.AreEqual(add.Name, "Add");
+        }
+        [Test()]
+        public void TestEvaluateAdd()
+        {
+
+            Assert.That(add.Evaluate(new string[] { "0", "5" }), Is.EqualTo(5));
+            Assert.That(add.Evaluate(new string[] { "1", "-1" }), Is.EqualTo(0));
+            Assert.That(add.Evaluate(new string[] { "2", "2,5" }), Is.EqualTo(4.5));
+            Assert.That(add.Evaluate(new string[] { "3,5", "-1,5" }), Is.EqualTo(2));
+        }
+
+
+        [Test()]
+        public void EvaluateFailureAdd()
+        {
+            Assert.That(delegate { add.Evaluate(new string[] { "3.5" }); }, Throws.TypeOf<EvaluationException>());
+            Assert.That(delegate { add.Evaluate(new string[] { "huit" }); }, Throws.TypeOf<EvaluationException>());
+
+        }
+
     }
 }

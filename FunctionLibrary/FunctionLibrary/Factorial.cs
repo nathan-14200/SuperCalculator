@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using SuperComputer;
 
 namespace SuperComputer
 {
-    class Factorial : Function<int>, IFunction
+    public class Factorial : Function<uint>, IFunction
     {
         public string Name
         {
@@ -33,25 +34,36 @@ namespace SuperComputer
             }
         }
 
-        public int Evaluate(string[] args)
+        public uint Evaluate(string[] args)
         {
             try
             {
-                int a = Convert.ToInt32(args[0]);
-                int fact = 1;
+                uint a = Convert.ToUInt32(args[0]);
+                uint fact = 1;
 
-                for (int i = a; i<=2; i--)
+                if (a < 0){ throw new FormatException(); }
+
+                if (a == 0) { return 1; }
+
+                else if (a == 1)
                 {
-                    fact *= i;
+                    return 1;
                 }
+                else
+                {
+                    for (uint i = 2; i <= a; i++)
+                    {
+                        fact *= i;
+                    }
 
-                return fact;
+                return fact;                                     
+                }
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
-                throw new EvaluationException("Le paramètre doit être un entier.");
+                throw new EvaluationException("Le paramètre doit être un nombre entier.");
             }
-            catch (OverflowException ex)
+            catch (OverflowException)
             {
                 throw new EvaluationException("Le résultat est trop grand");
             }
@@ -64,9 +76,28 @@ namespace SuperComputer
         Factorial factorial = new Factorial() ;
 
         [Test()]
-        public void TestName()
+        public void TestNameFactorial()
         {
             Assert.AreEqual(factorial.Name, "Factorial");
         }
+        [Test()]
+        public void TestEvaluateFactorial()
+        {
+            
+            Assert.That(factorial.Evaluate(new string[] { "0" }), Is.EqualTo(1));
+            Assert.That(factorial.Evaluate(new string[] { "1" }), Is.EqualTo(1));
+            Assert.That(factorial.Evaluate(new string[] { "2" }), Is.EqualTo(2));
+            Assert.That(factorial.Evaluate(new string[] { "3" }), Is.EqualTo(6));
+        }
+
+        
+        [Test()]
+        public void EvaluateFailureFactorial()
+        {
+            Assert.That(delegate { factorial.Evaluate(new string[] { "3.5" }); },Throws.TypeOf<EvaluationException>());
+            Assert.That(delegate { factorial.Evaluate(new string[] { "huit" }); }, Throws.TypeOf<EvaluationException>());
+            Assert.That(delegate { factorial.Evaluate(new string[] { "-2" }); }, Throws.TypeOf<EvaluationException>());
+        }
+
     }
 }
